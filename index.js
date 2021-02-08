@@ -2,44 +2,49 @@ const {handOverHelp} = require('./subsystem/help.js')
 const {logInit} = require('./log/log.js')
 const { handOverAliveTest } = require('./subsystem/alivetest.js')
 
-let mainRunInfo = {
-    timeInervalIDs : [],
-    timeOutIDs : [],
-    runningSubsystems : [],
-    firstSubsystemStartTimeMS : null,
+let subName = "main"
+// 全局主从mainRunInfo对象
+global.mainRunInfo = {
+    // timeInervalIDs : [],
+    // timeOutIDs : [],
+    // runningSubsystems : [],
+    // firstSubsystemStartTimeMS : null,
+    // errerOccur : false,
+    // errerMsg : null,
+    subSystems : [],
     // 启动系统监控，自动退出
     systemInit : function(){
         // 初始化log进程
         logInit()
-        // 1s循环尝试退出
-        this.timeInervalIDs.push(setInterval(()=>{
-            if(this.firstSubsystemStartTimeMS != null){
-                if(this.timeOutIDs.length == 0 && this.timeInervalIDs.length == 1){
-                    log("System has shot down","close")
-                    clearInterval(this.timeInervalIDs[0])
-                }
-            }
-        },1000))
+        // 注册主程序名
+        this.registerSubsystem(subName)
+        // 500ms循环尝试退出
+        this.subSystems[0].timeInervalIDs.push(setInterval(()=>{
+            console.log(this)
+        },500))
     },
-    // 注册运行种的子进程
-    registerSubsystem : function(subSystemName){
-        if(this.firstSubsystemStartTimeMS == null){
-            this.firstSubsystemStartTimeMS = (new Date()).getTime()
-        }
-        this.runningSubsystems.push(subSystemName)
+    // 注册子进程
+    registerSubsystem : function(subName){
+        let registerSubSys = {}
+        registerSubSys.name = subName
+        registerSubSys.stat = 'running'         // option ['running','stop']
+        registerSubSys.timeInervalIDs = []
+        registerSubSys.timeOutIDs = []
+        registerSubSys.startTimeMS = (new Date()).getTime()
+        registerSubSys.endTimeMS = null
+        registerSubSys.errerOccur = false
+        registerSubSys.errerMeg = null
+        this.subSystems.push(registerSubSys)
     },
-    // 注销运行种的子进程
+    // 注销子进程
     unregisterSubsystem : function(subSystemName){
-        let index = 0
-        for(;index < this.runningSubsystems.length;index++){
-            if(this.runningSubsystems[index] == subSystemName){
-                break
+        for(let index in this.subSystems){
+            if(subSystemName == this.subSystems[index].name){
+                this.subSystems[index].stat = 'stop'
+                this.subSystems[index].endTimeMS = (new Date()).getTime()
+                log(JSON.stringify(this.subSystems[index]))
+                this.subSystems.splice(index,1)
             }
-        }
-        if(index < this.runningSubsystems.length){
-            this.runningSubsystems.splice(index,1)
-        }else{
-            console.error('Unregist subSystem try to unregist')
         }
     }
 }
@@ -58,9 +63,11 @@ if(argv1.match(/^-h$|^--help$/i)){
 // 运行子系统
 switch(process.argv[2]){
     case '--alivetest': 
-        handOverAliveTest(mainRunInfo)
+        handOverAliveTest()
         break;
     case '-h':
     default: 
-        handOverHelp(mainRunInfo)
+        handOverHelp()
 }
+
+// mainRunInfo.unregisterSubsystem(subName)

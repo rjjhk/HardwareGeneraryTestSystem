@@ -15,7 +15,7 @@
             "wifi5GDestinationIP":"192.168.0.1",
             "wifi5GSourceIP":"192.168.0.101",
             "internetDestinationIP":"www.baidu.com",
-            
+
             "intervalTimeM":1,
             "testTimeH":24
         }
