@@ -1,6 +1,6 @@
 const {handOverHelp} = require('./subsystem/help.js')
 const {logInit} = require('./log/log.js')
-const { spawn } = require('child_process')
+const { handOverAliveTest } = require('./subsystem/alivetest.js')
 
 let mainRunInfo = {
     timeInervalIDs : [],
@@ -48,14 +48,19 @@ let mainRunInfo = {
 mainRunInfo.systemInit()
 
 // 格式化输入参数
-let argv1 = process.argv[2].trim()
+let argv1 = process.argv[2]?process.argv[2].trim():''
 if(argv1.match(/^-h$|^--help$/i)){
     argv1 = '-h'
+}else if(argv1.match(/^--alivetest$/i)){
+    argv1 = "--alivetest"
 }
 
 // 运行子系统
 switch(process.argv[2]){
+    case '--alivetest': 
+        handOverAliveTest(mainRunInfo)
+        break;
     case '-h':
     default: 
-    handOverHelp(mainRunInfo)
+        handOverHelp(mainRunInfo)
 }
