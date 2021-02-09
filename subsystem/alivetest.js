@@ -1,34 +1,8 @@
 const fsP = require('fs').promises
 const { spawn } = require('child_process')
 
-let subName = "alivetest"
-let subRunInfo = {
-    timeInervalIDs : [],
-    timeOutIDs : [],   
-    firstSubsystemStartTimeMS : null,
-    stillRunning : false,
-    // 启动系统监控，自动退出
-    systemInit : function(fatherSystemUnregisterFun){
-        this.firstSubsystemStartTimeMS = (new Date()).getTime()
-        this.stillRunning = true
-        // 100ms循环尝试退出
-        this.timeInervalIDs.push(setInterval(()=>{
-            if(this.firstSubsystemStartTimeMS != null){
-                if(this.timeOutIDs.length == 0 && this.timeInervalIDs.length == 1 && !this.stillRunning){
-                    log(subName + " subsystem has shot down")
-                    clearInterval(this.timeInervalIDs[0])
-                    fatherSystemUnregisterFun(subName)
-                }
-            }
-            console.log(subName)
-        },1000))
-    },
-}
-
-let nullPromise = new Promise((res,rej) => { res()})
+let nullPromise = new Promise((res,rej) => {res()})
 exports.handOverAliveTest = () => {
-    mainRunInfo.registerSubsystem(subName)
-    subRunInfo.systemInit()
     nullPromise.then(res => {
         aliveTestMain()
     }).catch(err => {
@@ -54,7 +28,7 @@ let aliveTestMain = () => {
             // 根据不同的测试，执行不同的测试路径
             switch(dut.testType){
                 case "lan":
-                   // lanAliveTest(dut)
+                    lanAliveTest(dut)
                     break
                 case "wifi2G":
                     break
@@ -72,4 +46,9 @@ let aliveTestMain = () => {
             }
         }
     })
+}
+
+let lanAliveTest = (dut) => {
+    let subProcess = spawn('ping',[dut.lanDestinationIP,'-S',dut.lanSourceIP,'-w',dut.returnTimeS.toString()])
+    subProcess.on("data")
 }

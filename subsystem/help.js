@@ -1,15 +1,12 @@
 const fsP = require('fs').promises
-const subName = 'help'
-let nullPromise = new Promise((res,rej)=>{res()})
 
+let nullPromise = new Promise((res,rej)=>{res()})
 exports.handOverHelp = () => {
-    mainRunInfo.registerSubsystem(subName)
     nullPromise.then(res => {
         return helpMain()
     }).catch(err => {
+        log(err)
         console.error(err)
-    }).finally(() => {
-        mainRunInfo.unregisterSubsystem(subName)
     })
 }
 
