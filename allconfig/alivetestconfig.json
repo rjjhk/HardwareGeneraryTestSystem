@@ -17,7 +17,8 @@
             "internetDestinationIP":"www.baidu.com",
 
             "intervalTimeM":1,
-            "testTimeH":24
+            "testTimeH":24,
+            "returnTimeS":20
         }
     ]
 }
