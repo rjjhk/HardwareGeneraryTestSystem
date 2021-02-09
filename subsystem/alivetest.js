@@ -52,18 +52,25 @@ let aliveTestMain = () => {
 
 let lanAliveTest = (dut) => {
     workingIndex++
+    let testName = 'LanAliveTest'
     let sublog = ''
-    let subProcess = spawn('ping',[dut.lanDestinationIP,'-S',dut.lanSourceIP,'-w',dut.returnTimeS.toString()])
-    subProcess.on("data",(data)=>{  
-        sublog += iconv.decode(data,'gbk')
+    let templog = ''     // log临时停靠
+    let subProcess = spawn('ping',[dut.lanDestinationIP,'-S',dut.lanSourceIP,'-w',dut.returnTimeS.toString(),'-n','1'])
+    subProcess.stdout.on("data",(data)=>{ 
+        templog += iconv.decode(data,'gbk')
+        if(templog[templog.length - 1] == '\n'){
+            sublog += iconv.decode(data,'gbk')
+            logDealWithFun(templog)
+            templog = ''
+        } 
+
     })
     subProcess.on("close",()=>{  
-        log(dut.index + ' log')
+        logToFile(JSON.stringify(dut) + '\n' + sublog,testName,dut.index)
     })
-
+    // log分段处理函数
     let logDealWithFun = (log) => {
-        if(log.match(/[^|\n][\s\S][\n|$]/)){
-            console.log(log.match(/[^|\n][\s\S][\n|$]/))
-        }
+        console.log(log)
     }
+    // 循环
 }

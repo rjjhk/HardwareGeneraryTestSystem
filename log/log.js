@@ -1,4 +1,5 @@
 const fsP = require('fs').promises
+const ys = require('../lib/YSlibrary')
 
 let logText = ''
 log = (logstring,save) => {
@@ -17,9 +18,18 @@ log = (logstring,save) => {
     } 
 }
 
+logToFile = (log,testName,testIndex) => {
+    fsP.writeFile('./log/' + testName + '-' + testIndex + '-' + ys.getTimeString(),log,{encoding:'utf8'}).then(res => {
+        // console.log(res)
+    }).catch(err => {
+        log(err)
+    })
+}
+
 exports.logInit = () => {
-    // 挂载全局log方法
+    // 挂载全局log/logToFile方法
     global.log = log
+    global.logToFile = logToFile
     // 设置退出前的回调,保存缓存log
     process.on('beforeExit',()=>{
         if(logText.length != 0){
