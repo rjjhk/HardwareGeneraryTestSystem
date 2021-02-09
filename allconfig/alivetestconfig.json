@@ -2,6 +2,7 @@
     "name":"Alive Test",
     "DUTs":[
         {
+            "index":1,
             "testType":"lan",
             "testTypeDesc":"testType option - [lan,wifi2G,wifi5G,internet,wifi,local,all]",
 

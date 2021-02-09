@@ -1,6 +1,8 @@
 const fsP = require('fs').promises
+const iconv = require('iconv-lite')
 const { spawn } = require('child_process')
 
+let workingIndex = 0
 let nullPromise = new Promise((res,rej) => {res()})
 exports.handOverAliveTest = () => {
     nullPromise.then(res => {
@@ -49,6 +51,19 @@ let aliveTestMain = () => {
 }
 
 let lanAliveTest = (dut) => {
+    workingIndex++
+    let sublog = ''
     let subProcess = spawn('ping',[dut.lanDestinationIP,'-S',dut.lanSourceIP,'-w',dut.returnTimeS.toString()])
-    subProcess.on("data")
+    subProcess.on("data",(data)=>{  
+        sublog += iconv.decode(data,'gbk')
+    })
+    subProcess.on("close",()=>{  
+        log(dut.index + ' log')
+    })
+
+    let logDealWithFun = (log) => {
+        if(log.match(/[^|\n][\s\S][\n|$]/)){
+            console.log(log.match(/[^|\n][\s\S][\n|$]/))
+        }
+    }
 }
