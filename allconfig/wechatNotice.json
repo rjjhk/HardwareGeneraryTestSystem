@@ -1,0 +1,19 @@
+{
+    "sentMsgObj":{
+        "destinationURL":"http://wxpusher.zjiecode.com/api/send/message",
+        "appToken":"AT_vomKMgEiKqbcKABfkrjBNfasZ6QPfF2R",
+        "content":"Yingsan",
+        "summary":"测试结果",
+        "contentType":1,
+        "uids":[
+            "UID_KU7OwGpmRVwrPMjWIkqQ3OjORsHh"
+        ],
+        "url":"" 
+    },
+    "getUsersObj":{
+        "destinationURL":"https://wxpusher.zjiecode.com/api/fun/wxuser/v2",
+        "appToken":"AT_vomKMgEiKqbcKABfkrjBNfasZ6QPfF2R",
+        "page": 1,
+        "pageSize": 100
+    }
+}

@@ -1,24 +1,26 @@
 {
     "name":"Alive Test",
+    "commonSetting":{
+        "intervalTimeS":5,
+        "testTimeH":1
+    },
     "DUTs":[
         {
             "index":1,
-            "testType":"lan",
+            "testType":"all",
             "testTypeDesc":"testType option - [lan,wifi2G,wifi5G,internet,wifi,local,all]",
 
             "ipSegment":"0",
             "ipSegmentDesc":"used for update flower IP address",
 
             "lanDestinationIP":"192.168.0.1",
-            "lanSourceIP":"192.168.0.10",
+            "lanSourceIP":"192.168.0.173",
             "wifi2GDestinationIP":"192.168.0.1",
             "wifi2GSourceIP":"192.168.0.100",
             "wifi5GDestinationIP":"192.168.0.1",
-            "wifi5GSourceIP":"192.168.0.101",
+            "wifi5GSourceIP":"192.168.0.167",
             "internetDestinationIP":"www.baidu.com",
-
-            "intervalTimeM":1,
-            "testTimeH":24,
+            "internetSourceIP":"192.168.0.173",
             "returnTimeS":20
         }
     ]

@@ -1,0 +1,37 @@
+{
+    "hardware":"X21",
+    "iperfPath":"",
+    "iperfTestTimeS":"30",
+    "nowerTestDesc":"",
+    "router":{
+        "destinationURL":"http://192.168.0.1/cgi-bin/http.cgi",
+        "requestPayload":{
+            "cmd":"null",
+            "language":"CN",
+            "method":"GET",
+            "sessionId":"d700ebcd46425f7e542e71c1e2d2609bc4ab450fecb3e374da6afdad4d8c07be"
+        }
+    },
+    "tests":[
+        {
+            "wifi":"wifi-24G",
+            "destinationIP":"192.168.0.167",
+            "sourceIP":"192.168.0.173",
+            "wifimode":["802.11b","802.11g","802.11n"],
+            "bgBandwidth":["20M"],
+            "nBandwidth":["20M","40M"],
+            "channels":["1","7","13"],
+            "angle":[0,90,180,270]
+        },{
+            "wifi":"wifi-5G",
+            "destinationIP":"192.168.0.167",
+            "sourceIP":"192.168.0.173",
+            "wifimode":["802.11a","802.11n","802.11ac"],
+            "aBandwidth":["20M"],
+            "nBandwidth":["20M","40M"],
+            "acBandwidth":["20M","40M","80M"],
+            "channels":["1","7","13"],
+            "angle":[0,90,180,270]
+        }
+    ]
+}

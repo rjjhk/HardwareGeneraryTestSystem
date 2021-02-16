@@ -3,6 +3,7 @@
     "desc":"Hardarware Test System Designed by Yingsan",
     "function":[
         {"attr":"-h","desc":"参数功能描述"},
-        {"attr":"--help","desc":"参数功能描述"}
+        {"attr":"--help","desc":"参数功能描述"},
+        {"attr":"--alivetest","desc":"DUT长挂测试"}
     ]
 }

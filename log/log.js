@@ -3,12 +3,12 @@ const ys = require('../lib/YSlibrary')
 
 let logText = ''
 log = (logstring,save) => {
+    console.log(logstring)
     logText += '[' + (new Date()).toLocaleString() + ']\t' + logstring + '\n'
     if(logText.length > 1000 || save == "save"){  
         let tempText = logText
         logText = ''
         fsP.access('./log/log').then(res => {
-            console.log(res)
             return fsP.appendFile('./log/log',tempText,{encoding:'utf8'})
         }).catch(err => {
             return fsP.writeFile('./log/log',tempText,{encoding:'utf8'})
@@ -18,15 +18,15 @@ log = (logstring,save) => {
     } 
 }
 
-logToFile = (log,testName,testIndex) => {
-    fsP.writeFile('./log/' + testName + '-' + testIndex + '-' + ys.getTimeString(),log,{encoding:'utf8'}).then(res => {
+logToFile = (log,testName) => {
+    fsP.writeFile('./log/' + testName + '-' + ys.getTimeString(),log,{encoding:'utf8'}).then(res => {
         // console.log(res)
     }).catch(err => {
         log(err)
     })
 }
 
-exports.logInit = () => {
+exports.logInit = async () => {
     // 挂载全局log/logToFile方法
     global.log = log
     global.logToFile = logToFile
@@ -36,13 +36,11 @@ exports.logInit = () => {
             log("Done","save")
         }})
 
-    fsP.access('./log/log').then(res => {
+    await fsP.access('./log/log').then(res => {
         return fsP.unlink('./log/log')
-    }).then(res => {
-        // res 为undefined
     }).catch(err => {
-        log(err)
+        // do nothing 
     }).finally(() => {
-        log('System Log Init Finished')
+        log('log init success')
     })
 }
