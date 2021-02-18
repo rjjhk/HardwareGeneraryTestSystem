@@ -19,10 +19,9 @@ exports.initWechatNotice = async () => {
             // 全局挂载方法
             global.sentMessageToWeChat = sentMessageToWeChat
         }
-    }).catch(err => {
-        log(err)
-    }).finally(() => {
         log('wechatNotice init success')
+    }).catch(err => {
+        log('wechatNotice init fail')
     })
 }
 // 发送微信通知
