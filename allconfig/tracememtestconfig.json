@@ -1,0 +1,5 @@
+{
+    "name":"tracememtest",
+    "subToolPath":"./tool/adb/adb.exe",
+    "getMemIntervalTimeM":5
+}

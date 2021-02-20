@@ -4,6 +4,7 @@
     "function":[
         {"attr":"-h","desc":"参数功能描述"},
         {"attr":"--help","desc":"参数功能描述"},
-        {"attr":"--alivetest","desc":"DUT长挂测试"}
+        {"attr":"--alivetest","desc":"DUT长挂测试"},
+        {"attr":"--throuthputtest","desc":"吞吐量测试"}
     ]
 }

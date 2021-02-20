@@ -5,6 +5,7 @@ const {initWechatNotice} = require('./wechatNotice/wechatNotice.js')
 const {handOverHelp} = require('./subsystem/help.js')
 const {handOverAliveTest} = require('./subsystem/alivetest.js')
 const {handOverThrouthPutTest} = require('./subsystem/throughputtest.js')
+const {handOverTraceMemTest} = require('./subsystem/tracememtest.js')
 // 全局注册
 global.axios = axios
 global.iconv = iconv
@@ -25,6 +26,9 @@ switch(process.argv[2]){
         handOverAliveTest()
         break;
     case '--test':
+        handOverTraceMemTest()
+        break
+    case '--throuthputtest':
         handOverThrouthPutTest()
         break
     case '-h':
