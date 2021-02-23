@@ -24,11 +24,15 @@ let getADBdevices = () => {
     ls.on("close",code => {
         // 筛选出deviceID
         for(let deviceID of lsLog.match(/[\s\S]*?\n/g).slice(1)){
-            if(deviceID.trim().replace(/\r/g,"").replace(/\n/g,"").trim().length > 0){
-                devices.push(deviceID)
+            let tempDeviceID = deviceID.trim().replace(/\r/g,"").replace(/\n/g,"").replace(/\t/,"").replace(/device/i,"").trim()
+            if(tempDeviceID.length > 0){
+                devices.push({adbID:tempDeviceID})
             }
         }
         // 启动定时器获取mem
-        
+        let getMEMTimeIntervalID = setInterval(()=>{
+            
+        },config.getMemIntervalTimeM)
+        console.log(devices)
     })
 }
