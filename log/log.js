@@ -18,8 +18,14 @@ log = (logstring,save) => {
     } 
 }
 
-logToFile = (log,testName) => {
-    fsP.writeFile('./log/' + testName + '-' + ys.getTimeString(),log,{encoding:'utf8'}).then(res => {
+logToFile = (log,testName,withTime) => {
+    let fileNameWithPath = null
+    if(withTime){
+        fileNameWithPath = './log/' + testName + '-' + ys.getTimeString()
+    }else{
+        fileNameWithPath = './log/' + testName
+    }
+    fsP.writeFile(fileNameWithPath,log,{encoding:'utf8'}).then(res => {
         // console.log(res)
     }).catch(err => {
         log(err)
